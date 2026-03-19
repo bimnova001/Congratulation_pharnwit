@@ -5,7 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Congratulations - Pharnwit Winmnanad</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+                        display: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'pharnwit-orange': '#FF8C00',
+                        'pharnwit-orange-dark': '#cc7000',
+                        'pharnwit-red': '#660000',
+                        'pharnwit-red-2': '#440000',
+                        'pharnwit-glass': 'rgba(255, 255, 255, 0.08)',
+                    },
+                },
+            },
+        };
+    </script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
@@ -18,9 +41,47 @@
             --glass: rgba(255, 255, 255, 0.08);
             --airmail-red: #ef4444;
             --airmail-blue: #3b82f6;
+
+            /* Button theme vars (default: orange theme) */
+            --btn-border-1: var(--orange);
+            --btn-border-2: var(--dark-red-main);
+            --btn-text: var(--orange);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kanit', sans-serif; }
+        .theme-orange {
+            --btn-border-1: var(--orange);
+            --btn-border-2: var(--dark-red-main);
+            --btn-text: var(--orange);
+        }
+        .theme-red {
+            --btn-border-1: #ff5a5a;
+            --btn-border-2: #c50000;
+            --btn-text: #c50000;
+        }
+        .theme-blue {
+            --btn-border-1: #3b82f6;
+            --btn-border-2: #0b73ff;
+            --btn-text: #0b73ff;
+        }
+        .theme-purple {
+            --btn-border-1: #a855f7;
+            --btn-border-2: #6366f1;
+            --btn-text: #6366f1;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        .btn-gradient-outline {
+            background: transparent;
+            border: 2px solid;
+            border-image: linear-gradient(45deg, var(--btn-border-1), var(--btn-border-2)) 1;
+            color: var(--btn-text);
+            transition: all 0.3s;
+        }
+        .btn-gradient-outline:hover {
+            background: linear-gradient(45deg, var(--btn-border-1), var(--btn-border-2));
+            color: white;
+        }
         
         body {
             overflow: hidden; /* ล็อกหน้าจอไว้จนกว่าจะเข้าหน้าหลัก */
@@ -204,19 +265,6 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
 
-        .btn-open {
-            margin-top: 25px;
-            padding: 12px 30px;
-            background: var(--dark-red-main);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            width: 100%;
-            box-shadow: 0 5px 15px rgba(102, 0, 0, 0.2);
-        }
-
         .tap-hint {
             text-align: center;
             margin-top: 40px;
@@ -232,7 +280,6 @@
 
         /* --- Main Content (Glassmorphism) --- */
         #main-content {
-            display: none;
             width: 95%;
             max-width: 850px;
             padding: 20px;
@@ -300,21 +347,27 @@
             <div class="letter" id="letter-card">
                 <h2>Congratulations!</h2>
                 <p>ขอแสดงความยินดีกับ</p>
-                <p><b>นาย ภาณวิศ วินมนัส</b></p>
+                <p><b>พี่ ภาณวิศ วินมนัส</b></p>
                 <p style="font-size: 0.8rem; margin-top: 5px;">สาขาไฟฟ้า</p>
-                <button class="btn-open">เข้าสู่คำอวดพร</button>
+                <button class="btn-gradient-outline theme-orange relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm md:text-base font-medium rounded-lg group focus:ring-4 focus:outline-none focus:ring-orange-300 dark:focus:ring-orange-800 w-full" type="button">
+                    <span class="relative px-4 py-2 md:px-8 md:py-4 transition-all ease-in duration-75 bg-white rounded-lg group-hover:bg-transparent group-hover:dark:bg-transparent leading-5 text-center font-semibold" style="color: var(--btn-text)">
+                        เข้าสู่คำอวดพร
+                    </span>
+                </button>
             </div>
         </div>
-        <p class="tap-hint" id="hint-text">แตะที่ซองเพื่อเปิดจดหมาย</p>
+        <p id="hint-text" class="tap-hint mt-10 text-sm text-white/70">แตะที่ซองเพื่อเปิดจดหมาย</p>
     </div>
 
-    <main id="main-content">
-        <div class="glass-panel" data-aos="zoom-out-up" data-aos-delay="1200">
-            <img src="./cisat-remove.png" alt="Congratulations" style="width: 120px; margin-bottom: 20px;" data-aos="fade-down" data-aos-delay="100">
-            <h1 data-aos="fade-down" data-aos-delay="300">PHARNWIT <span>WINMNANAD</span></h1>
-            <div class="qc-tag" data-aos="flip-up" data-aos-delay="500">ITC รุ่น 16 สาขา ไฟฟ้า</div>
+    <main id="main-content" class="hidden min-h-screen flex items-center justify-center px-4 py-16">
+        <div class="glass-panel w-full max-w-3xl mx-auto" data-aos="zoom-out-up" data-aos-delay="1200">
+            <img src="./cisat-remove.png" alt="Congratulations" class="mx-auto mb-6 w-28" data-aos="fade-down" data-aos-delay="100">
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-wide text-white" data-aos="fade-down" data-aos-delay="300">
+                PHARNWIT <span class="text-pharnwit-orange">WINMNANAD</span>
+            </h1>
+            <div class="qc-tag inline-flex items-center justify-center mt-6" data-aos="flip-up" data-aos-delay="500">ITC รุ่น 16 สาขา ไฟฟ้า</div>
             
-            <p style="font-size: 1.1rem; line-height: 1.8; color: #ddd; max-width: 650px; margin: 0 auto;" data-aos="fade-in" data-aos-delay="700">
+            <p class="text-slate-200 text-lg leading-relaxed max-w-3xl mx-auto mt-8" data-aos="fade-in" data-aos-delay="700">
                 "คุณภาพไม่ได้เกิดจากความบังเอิญ แต่เกิดจากความมุ่งมั่นและตั้งใจ" <br>
                 ขอให้ทุกก้าวเดินหลังจากนี้ เต็มไปด้วยความสำเร็จที่งดงาม
             </p>
@@ -322,7 +375,7 @@
             <div class="grid">
                 <div class="info-card" data-aos="fade-right" data-aos-delay="900">
                     <h3>Graduation</h3>
-                    <p>สำเร็จการศึกษาปี 2026 จากมหาวิทยาลัยเทดโนโลยีและสหวิทยาการ </p>
+                    <p>สำเร็จการศึกษาปี 2026 จากวิทยาลัยเทดโนโลยีและสหวิทยาการ มทร.ล้านนา </p>
                 </div>
                 <div class="info-card" data-aos="fade-right" data-aos-delay="900">
                     <h3>Congratulations</h3>
@@ -334,6 +387,7 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
     <script>
         AOS.init({ duration: 1000, once: true });
 
@@ -361,7 +415,7 @@
             setTimeout(() => {
                 wrapper.style.display = 'none';
                 document.body.style.overflow = 'auto'; // ปลดล็อก scroll
-                mainContent.style.display = 'block';
+                mainContent.classList.remove('hidden');
                 
                 // รีเฟรช AOS เพื่อเริ่มเล่น Animation หน้าหลัก
                 setTimeout(() => {
