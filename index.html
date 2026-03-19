@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Congratulations - Pharnwit Winmnanad</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --orange: #FF8C00;
+            --orange-dark: #cc7000;
+            --white: #ffffff;
+            --dark-red-main: #660000;
+            --dark-red-bg: #440000;
+            --glass: rgba(255, 255, 255, 0.08);
+            --airmail-red: #ef4444;
+            --airmail-blue: #3b82f6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kanit', sans-serif; }
+        
+        body {
+            overflow: hidden; /* ล็อกหน้าจอไว้จนกว่าจะเข้าหน้าหลัก */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--white);
+            position: relative;
+            perspective: 1500px;
+            background: #110000;
+        }
+
+        /* --- Liquid Background Animation --- */
+        .liquid-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -2;
+            background: linear-gradient(125deg, #110000, var(--dark-red-bg), #660000, #b35900, #220000);
+            background-size: 400% 400%;
+            animation: liquidGradient 15s ease infinite;
+        }
+
+        @keyframes liquidGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(2px);
+        }
+
+        /* --- Envelope Wrapper & 3D Effect --- */
+        .envelope-wrapper {
+            position: relative;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s;
+        }
+
+        /* การบินออกของจดหมาย */
+        .envelope-wrapper.fly-away {
+            transform: translateY(-120vh) scale(0.5) rotateX(20deg);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .envelope {
+            position: relative;
+            width: 380px;
+            height: 250px;
+            background: #fdfcf5;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            border-radius: 5px;
+            transform-style: preserve-3d;
+        }
+
+        /* ลายขอบจดหมาย Air Mail */
+        .envelope::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(45deg, var(--airmail-red) 12.5%, transparent 12.5%, transparent 50%, var(--airmail-blue) 50%, var(--airmail-blue) 62.5%, transparent 62.5%, transparent 100%),
+                linear-gradient(45deg, var(--airmail-blue) 12.5%, transparent 12.5%, transparent 50%, var(--airmail-red) 50%, var(--airmail-red) 62.5%, transparent 62.5%, transparent 100%);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            opacity: 0.12;
+            z-index: 1;
+        }
+
+        /* พับซองด้านหน้า */
+        .envelope-front-folds {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 3;
+            pointer-events: none;
+        }
+        .envelope-front-folds::before, .envelope-front-folds::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            border-bottom: 125px solid #ece8d9;
+        }
+        .envelope-front-folds::before {
+            left: 0;
+            border-right: 190px solid transparent;
+            border-left: 190px solid #f4f1e1;
+        }
+        .envelope-front-folds::after {
+            right: 0;
+            border-left: 190px solid transparent;
+            border-right: 190px solid #f4f1e1;
+        }
+
+        /* ฝาซองแบบปิดสนิท */
+        .flap {
+            position: absolute;
+            top: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 190px solid transparent;
+            border-right: 190px solid transparent;
+            border-top: 150px solid #fdfcf5;
+            transform-origin: top;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 5;
+            transform: rotateX(0deg);
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
+        }
+
+        .envelope-wrapper.open .flap {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        /* ตราประทับครั่ง */
+        .wax-seal {
+            position: absolute;
+            top: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px; height: 70px;
+            background: var(--dark-red-main);
+            border-radius: 50%;
+            z-index: 6;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #b30000;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            border: 2px solid #990000;
+            transition: opacity 0.4s ease;
+        }
+
+        .envelope-wrapper.open .wax-seal {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* การ์ดด้านใน */
+        .letter {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.95);
+            width: 90%;
+            height: 90%;
+            background: #fff;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.3s, opacity 0.4s ease;
+            z-index: 2;
+            border-radius: 5px;
+            color: #333;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.05);
+            opacity: 0;
+        }
+
+        .letter h2 { color: var(--dark-red-main); font-size: 1.6rem; margin-bottom: 10px; }
+        .letter p { font-size: 1rem; color: #555; line-height: 1.5; }
+
+        .envelope-wrapper.open .letter {
+            transform: translate(-50%, -170px) scale(1.05);
+            z-index: 4;
+            opacity: 1;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .btn-open {
+            margin-top: 25px;
+            padding: 12px 30px;
+            background: var(--dark-red-main);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(102, 0, 0, 0.2);
+        }
+
+        .tap-hint {
+            text-align: center;
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 1px;
+            font-weight: 200;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; }
+        }
+
+        /* --- Main Content (Glassmorphism) --- */
+        #main-content {
+            display: none;
+            width: 95%;
+            max-width: 850px;
+            padding: 20px;
+            text-align: center;
+            z-index: 5;
+        }
+
+        .glass-panel {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 40px;
+            padding: 60px 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        h1 { font-size: 3.5rem; letter-spacing: 4px; font-weight: 700; margin-bottom: 10px; }
+        h1 span { color: var(--orange); }
+        .qc-tag { 
+            background: var(--orange); 
+            padding: 8px 30px; 
+            border-radius: 50px; 
+            display: inline-block;
+            font-weight: 600;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 20px rgba(255, 140, 0, 0.3);
+        }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 40px; }
+        .info-card {
+            background: rgba(0,0,0,0.3);
+            padding: 30px;
+            border-radius: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .info-card h3 { color: var(--orange); margin-bottom: 10px; }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            .envelope { width: 320px; height: 210px; }
+            .flap { border-left-width: 160px; border-right-width: 160px; border-top-width: 130px; }
+            .envelope-front-folds::before, .envelope-front-folds::after { border-bottom-width: 105px; }
+            .envelope-front-folds::before { border-right-width: 160px; border-left-width: 160px; }
+            .envelope-front-folds::after { border-left-width: 160px; border-right-width: 160px; }
+            .wax-seal { width: 55px; height: 55px; top: 95px; font-size: 1.8rem; }
+            .letter h2 { font-size: 1.3rem; }
+            .envelope-wrapper.open .letter { transform: translate(-50%, -140px) scale(1.05); }
+            h1 { font-size: 2.2rem; }
+            .grid { grid-template-columns: 1fr; }
+            .glass-panel { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="liquid-bg"></div>
+    <div class="bg-overlay"></div>
+
+    <div class="envelope-wrapper" id="envelope-wrap" onclick="handleInteraction()">
+        <div class="envelope" data-tilt data-tilt-max="10" data-tilt-speed="400">
+            <div class="flap"></div>
+            <div class="wax-seal">P</div>
+            <div class="envelope-front-folds"></div>
+            <div class="letter" id="letter-card">
+                <h2>Congratulations!</h2>
+                <p>ขอแสดงความยินดีกับ</p>
+                <p><b>นาย ภาณวิศ วินมนัส</b></p>
+                <p style="font-size: 0.8rem; margin-top: 5px;">ความภูมิใจของสายงาน QC</p>
+                <button class="btn-open">เข้าสู่เว็บไซต์ 🏆</button>
+            </div>
+        </div>
+        <p class="tap-hint" id="hint-text">แตะที่ซองเพื่อเปิดจดหมาย</p>
+    </div>
+
+    <main id="main-content">
+        <div class="glass-panel" data-aos="zoom-out-up">
+            <h1 data-aos="fade-down" data-aos-delay="300">PHARNWIT <span>WINMNANAD</span></h1>
+            <div class="qc-tag" data-aos="flip-up" data-aos-delay="500">QUALITY CONTROL (QC)</div>
+            
+            <p style="font-size: 1.1rem; line-height: 1.8; color: #ddd; max-width: 650px; margin: 0 auto;" data-aos="fade-in" data-aos-delay="700">
+                "คุณภาพไม่ได้เกิดจากความบังเอิญ แต่เกิดจากความมุ่งมั่นและตั้งใจ" <br>
+                ขอให้ทุกก้าวเดินหลังจากนี้ เต็มไปด้วยความสำเร็จที่งดงาม
+            </p>
+
+            <div class="grid">
+                <div class="info-card" data-aos="fade-right" data-aos-delay="900">
+                    <h3>🎓 Graduation</h3>
+                    <p>สำเร็จการศึกษาปี 2024</p>
+                </div>
+                <div class="info-card" data-aos="fade-left" data-aos-delay="1100">
+                    <h3>🎯 Success</h3>
+                    <p>ก้าวสู่การเป็น QC มืออาชีพ</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        let isOpened = false;
+        const wrapper = document.getElementById('envelope-wrap');
+        const mainContent = document.getElementById('main-content');
+        const hintText = document.getElementById('hint-text');
+
+        // ฟังก์ชันจัดการ Interaction (สะดวกมาก คลิกซ้ำหรือรูดขึ้นก็ได้)
+        function handleInteraction() {
+            if (!isOpened) {
+                // จังหวะที่ 1: เปิดจดหมาย
+                wrapper.classList.add('open');
+                hintText.innerText = "แตะอีกครั้ง หรือรูดขึ้นเพื่อไปต่อ";
+                isOpened = true;
+            } else {
+                // จังหวะที่ 2: เข้าหน้าหลัก
+                goToSite();
+            }
+        }
+
+        function goToSite() {
+            wrapper.classList.add('fly-away');
+            
+            setTimeout(() => {
+                wrapper.style.display = 'none';
+                document.body.style.overflow = 'auto'; // ปลดล็อก scroll
+                mainContent.style.display = 'block';
+                
+                // รีเฟรช AOS เพื่อเริ่มเล่น Animation หน้าหลัก
+                setTimeout(() => {
+                    AOS.refresh();
+                }, 100);
+            }, 600);
+        }
+
+        // ระบบ Swipe Up สำหรับมือถือ (เปิดแล้วรูดขึ้นเข้าหน้าหลักได้เลย)
+        let touchstartY = 0;
+        document.addEventListener('touchstart', e => touchstartY = e.changedTouches[0].screenY);
+        document.addEventListener('touchend', e => {
+            const touchendY = e.changedTouches[0].screenY;
+            if (isOpened && touchstartY - touchendY > 70) {
+                goToSite();
+            }
+        });
+    </script>
+</body>
+</html>
